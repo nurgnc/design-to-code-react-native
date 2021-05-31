@@ -11,18 +11,30 @@ export default class App extends React.Component {
         { id: 3, title: 'March Offer', description: 'Get cashback up to 30% for all transaction' },
         { id: 4, title: 'April Offer', description: 'Get cashback up to 30% for all transaction' },
         { id: 5, title: 'May Offer', description: 'Get cashback up to 30% for all transaction' },
+      ], category: [
+        { id: 1, title: 'All', icon: require('./assets/icons/all.png')},
+        { id: 2, title: 'Medicines', icon: require('./assets/icons/medicines.png')},
+        { id: 3, title: 'Vegetables', icon: require('./assets/icons/vegetables.png')},
+        { id: 4, title: 'Fruits', icon: require('./assets/icons/fruits.png')},
+        { id: 5, title: 'Utilities', icon: require('./assets/icons/Icon.png')},
       ]
     }
   }
 
-  renderItem = ({ item }) => {
+  renderPromotionItem = ({ item }) => {
     return <View style={style.promotionItem}>
       <Text style={style.promotionItemTitle}>{item.title}</Text>
       <Text style={style.promotionItemDescription}>{item.description}</Text>
     </View>
   }
+  renderCategoryItem = ({ item }) => {
+    return <View style={style.categoryItem}>
+      <Text style={style.categoryItemTitle}>{item.title}</Text>
+      <Text style={style.categoryItemDescription}>{item.description}</Text>
+    </View>
+  }
   render() {
-    const { promotion } = this.state;
+    const { promotion, category } = this.state;
     return (
       <SafeAreaView>
         <View style={style.header}>
@@ -42,15 +54,31 @@ export default class App extends React.Component {
             <View style={style.searchInputContainer}><TextInput placeholder="Search" placeholderTextColor={"#BBBBBB"} style={style.searchInput} /></View>
             <View style={style.searchButtonContainer}><TouchableOpacity style={style.searchButton}><Text>Ara</Text></TouchableOpacity></View>
           </View>
-          <FlatList
-          style={{paddingHorizontal: 10}}
-            showsHorizontalScrollIndicator={false}
-            data={promotion}
-            horizontal={true}
-            renderItem={this.renderItem}
-          />
+          <View style={style.promotion}>
+            <FlatList
+              style={{paddingHorizontal: 10}}
+              showsHorizontalScrollIndicator={false}
+              data={promotion}
+              horizontal={true}
+              renderItem={this.renderPromotionItem}
+            />
+          </View>
+          <View style={style.categoryArea}>
+          <View style={style.categoryAreaTopBar}>
+            <View><Text>Category</Text></View>
+            <View><Text>View All</Text></View>
+          </View>
+          <View>
+            <FlatList
+              style={{paddingHorizontal: 10}}
+              showsHorizontalScrollIndicator={false}
+              data={category}
+              horizontal={true}
+              renderItem={this.renderCategoryItem}
+            />
+          </View>
         </View>
-        <View style={style.categoryArea}></View>
+        </View>
       </SafeAreaView>
     )
   }
