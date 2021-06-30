@@ -11,12 +11,18 @@ export default class App extends React.Component {
         { id: 3, title: 'March Offer', description: 'Get cashback up to 30% for all transaction' },
         { id: 4, title: 'April Offer', description: 'Get cashback up to 30% for all transaction' },
         { id: 5, title: 'May Offer', description: 'Get cashback up to 30% for all transaction' },
-      ], category: [
+      ],
+      category: [
         { id: 1, title: 'All', icon: require('./assets/icons/all.png') },
         { id: 2, title: 'Medicines', icon: require('./assets/icons/medicines.png') },
         { id: 3, title: 'Vegetables', icon: require('./assets/icons/vegetables.png') },
         { id: 4, title: 'Fruits', icon: require('./assets/icons/fruits.png') },
         { id: 5, title: 'Utilities', icon: require('./assets/icons/all.png') },
+      ],
+      products: [
+        { id: 1, image: require('./assets/products/1.png'), title: 'Lemon', price: '15$' },
+        { id: 2, image: require('./assets/products/2.png'), title: 'Apple', price: '25$' },
+        { id: 3, image: require('./assets/products/1.png'), title: 'Kiwi', price: '8$' },
       ]
     }
   }
@@ -35,8 +41,19 @@ export default class App extends React.Component {
       <Text style={style.categoryItemTitle}>{item.title}</Text>
     </View>
   }
+  renderProductItem = ({ item }) => {
+    return <View style={style.productItem}>
+      <View style={style.productItemImageContainer}>
+        <Image style={style.productItemImage} source={item.image} />
+      </View>
+      <Text style={style.productItemTitle}>{item.title}</Text>
+      <Text style={style.productItemPrice}>{item.price}</Text>
+    </View>
+  }
+
+
   render() {
-    const { promotion, category } = this.state;
+    const { promotion, category, products } = this.state;
     return (
       <SafeAreaView>
         <View style={style.header}>
@@ -67,16 +84,31 @@ export default class App extends React.Component {
           </View>
           <View style={style.categoryArea}>
             <View style={style.categoryAreaTopBar}>
-              <View><Text style={{fontSize: 18, color: '#535353', fontWeight: '500'}}>Category</Text></View>
-              <View><Text style={{fontSize: 14, color: '#FBA346'}}>View All</Text></View>
+              <View><Text style={{ fontSize: 18, color: '#535353', fontWeight: '500' }}>Category</Text></View>
+              <View><Text style={{ fontSize: 14, color: '#FBA346' }}>View All</Text></View>
             </View>
-            <View style={{marginTop: 20}}>
+            <View style={{ marginTop: 20 }}>
               <FlatList
                 style={{ paddingHorizontal: 10 }}
                 showsHorizontalScrollIndicator={false}
                 data={category}
                 horizontal={true}
                 renderItem={this.renderCategoryItem}
+              />
+            </View>
+          </View>
+          <View style={style.categoryArea}>
+            <View style={style.categoryAreaTopBar}>
+              <View><Text style={{ fontSize: 18, color: '#535353', fontWeight: '500' }}>Featured Products</Text></View>
+              <View><Text style={{ fontSize: 14, color: '#FBA346' }}>View All</Text></View>
+            </View>
+            <View style={{ marginTop: 20 }}>
+              <FlatList
+                style={{ paddingHorizontal: 10 }}
+                showsHorizontalScrollIndicator={false}
+                data={products}
+                horizontal={true}
+                renderItem={this.renderProductItem}
               />
             </View>
           </View>
@@ -219,7 +251,36 @@ const style = StyleSheet.create({
   categoryItemTitle: {
     textAlign: 'center',
     marginTop: 15,
-    fontSize: 14, 
+    fontSize: 14,
     color: '#535353',
+  },
+  productItem: {
+    width: 160,
+    height: 168,
+    padding: 10,
+    marginVertical: 20,
+    marginRight: 10,
+    marginLeft: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 2.62,
+    elevation: 8,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    alignItems: 'center',
+  },
+  productItemImageContainer: {
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  productItemImage: {
+    width: '100%',
+    height: '100%',
   }
 })
