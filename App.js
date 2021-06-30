@@ -12,11 +12,11 @@ export default class App extends React.Component {
         { id: 4, title: 'April Offer', description: 'Get cashback up to 30% for all transaction' },
         { id: 5, title: 'May Offer', description: 'Get cashback up to 30% for all transaction' },
       ], category: [
-        { id: 1, title: 'All', icon: require('./assets/icons/all.png')},
-        { id: 2, title: 'Medicines', icon: require('./assets/icons/medicines.png')},
-        { id: 3, title: 'Vegetables', icon: require('./assets/icons/vegetables.png')},
-        { id: 4, title: 'Fruits', icon: require('./assets/icons/fruits.png')},
-        { id: 5, title: 'Utilities', icon: require('./assets/icons/Icon.png')},
+        { id: 1, title: 'All', icon: require('./assets/icons/all.png') },
+        { id: 2, title: 'Medicines', icon: require('./assets/icons/medicines.png') },
+        { id: 3, title: 'Vegetables', icon: require('./assets/icons/vegetables.png') },
+        { id: 4, title: 'Fruits', icon: require('./assets/icons/fruits.png') },
+        { id: 5, title: 'Utilities', icon: require('./assets/icons/all.png') },
       ]
     }
   }
@@ -29,8 +29,10 @@ export default class App extends React.Component {
   }
   renderCategoryItem = ({ item }) => {
     return <View style={style.categoryItem}>
+      <View style={style.categoryItemIconContainer}>
+        <Image style={style.categoryItemIcon} source={item.icon} />
+      </View>
       <Text style={style.categoryItemTitle}>{item.title}</Text>
-      <Text style={style.categoryItemDescription}>{item.description}</Text>
     </View>
   }
   render() {
@@ -56,7 +58,7 @@ export default class App extends React.Component {
           </View>
           <View style={style.promotion}>
             <FlatList
-              style={{paddingHorizontal: 10}}
+              style={{ paddingHorizontal: 10 }}
               showsHorizontalScrollIndicator={false}
               data={promotion}
               horizontal={true}
@@ -64,20 +66,20 @@ export default class App extends React.Component {
             />
           </View>
           <View style={style.categoryArea}>
-          <View style={style.categoryAreaTopBar}>
-            <View><Text>Category</Text></View>
-            <View><Text>View All</Text></View>
+            <View style={style.categoryAreaTopBar}>
+              <View><Text style={{fontSize: 18, color: '#535353', fontWeight: '500'}}>Category</Text></View>
+              <View><Text style={{fontSize: 14, color: '#FBA346'}}>View All</Text></View>
+            </View>
+            <View style={{marginTop: 20}}>
+              <FlatList
+                style={{ paddingHorizontal: 10 }}
+                showsHorizontalScrollIndicator={false}
+                data={category}
+                horizontal={true}
+                renderItem={this.renderCategoryItem}
+              />
+            </View>
           </View>
-          <View>
-            <FlatList
-              style={{paddingHorizontal: 10}}
-              showsHorizontalScrollIndicator={false}
-              data={category}
-              horizontal={true}
-              renderItem={this.renderCategoryItem}
-            />
-          </View>
-        </View>
         </View>
       </SafeAreaView>
     )
@@ -179,4 +181,45 @@ const style = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500'
   },
+  categoryArea: {
+    marginTop: 20,
+  },
+  categoryAreaTopBar: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  categoryItem: {
+    padding: 10,
+    marginRight: 10,
+    marginLeft: 10,
+    alignItems: 'center',
+  },
+  categoryItemIconContainer: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 2.62,
+    elevation: 8,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  categoryItemIcon: {
+    width: '50%',
+    height: '50%',
+  },
+  categoryItemTitle: {
+    textAlign: 'center',
+    marginTop: 15,
+    fontSize: 14, 
+    color: '#535353',
+  }
 })
